@@ -9,6 +9,9 @@ STARTING_POS_X = WINDOWS_WIDTH / 2
 STARTING_POS_Y = WINDOWS_HEIGHT / 2
 BLOCK = 10
 
+def collision(pos1, pos2):
+    return pos1 == pos2
+
 def checking_margins(pos):
     if 0 <= pos[0] < WINDOWS_WIDTH and 0 <= pos[1] < WINDOWS_HEIGHT:
         return False
@@ -51,6 +54,8 @@ while True:
 
     window.blit(apple_surface, apple_pos)
 
+    if (collision(snake_pos[0], apple_pos)):
+        apple_pos = generate_random_position()
     for pos in snake_pos:
         window.blit(snake_surface,pos)
 
