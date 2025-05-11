@@ -12,6 +12,9 @@ BLOCK = 10
 points = 0
 velocity = 10
 
+pygame.font.init()
+fonte = pygame.font.SysFont('arial', 35, True, True) # Negrito e Itálico.
+
 def collision(pos1, pos2):
     return pos1 == pos2
 
@@ -35,6 +38,7 @@ def game_over():
 
 pygame.init()
 window = pygame.display.set_mode((WINDOWS_WIDTH, WINDOWS_HEIGHT))
+pygame.display.set_caption('Sna Snake')
 
 snake_pos = [(STARTING_POS_X, STARTING_POS_Y), (STARTING_POS_X + BLOCK, STARTING_POS_Y), (STARTING_POS_X + 2 * BLOCK, STARTING_POS_Y)]
 snake_surface = pygame.Surface((BLOCK, BLOCK))
@@ -52,6 +56,9 @@ apple_pos = generate_random_position()
 while True:
     pygame.time.Clock().tick(velocity)
     window.fill((0,0,0))
+
+    message = f'Points: {points}'
+    text = fonte.render(message, True, (255, 255, 255))
 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -108,4 +115,6 @@ while True:
 
     elif direction == K_DOWN:
         snake_pos[0] = snake_pos[0][0], snake_pos[0][1] + BLOCK # Movimentação para baixo.
+
+    window.blit(text,(420,30))
     pygame.display.update()
