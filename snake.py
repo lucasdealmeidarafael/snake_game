@@ -50,7 +50,16 @@ while True:
 
         elif event.type == KEYDOWN:
             if event.key in [K_UP, K_DOWN, K_LEFT, K_RIGHT]:
-                direction = event.key
+                if event.key == K_UP and direction == K_DOWN:
+                    continue
+                elif event.key == K_DOWN and direction == K_UP:
+                    continue
+                elif event.key == K_RIGHT and direction == K_LEFT:
+                    continue
+                elif event.key == K_LEFT and direction == K_RIGHT:
+                    continue
+                else:
+                    direction = event.key
 
     window.blit(apple_surface, apple_pos)
 
@@ -62,6 +71,8 @@ while True:
         window.blit(snake_surface,pos)
 
     for item in range(len(snake_pos)-1,0,-1):
+        if collision(snake_pos[0], snake_pos[item]):
+            game_over()
         snake_pos[item] = snake_pos[item-1]
 
     if checking_margins(snake_pos[0]):
