@@ -9,6 +9,9 @@ STARTING_POS_X = WINDOWS_WIDTH / 2
 STARTING_POS_Y = WINDOWS_HEIGHT / 2
 BLOCK = 10
 
+points = 0
+velocity = 10
+
 def collision(pos1, pos2):
     return pos1 == pos2
 
@@ -47,7 +50,7 @@ apple_surface.fill((255, 0, 0))
 apple_pos = generate_random_position()
 
 while True:
-    pygame.time.Clock().tick(30)
+    pygame.time.Clock().tick(velocity)
     window.fill((0,0,0))
 
     for event in pygame.event.get():
@@ -74,6 +77,9 @@ while True:
         snake_pos.append((-10,-10))
         apple_pos = generate_random_position()
         obstacle_pos.append(generate_random_position())
+        points += 1
+        if points % 5 == 0:
+            velocity += 2
 
     for pos in obstacle_pos:
         if collision(snake_pos[0],pos):
