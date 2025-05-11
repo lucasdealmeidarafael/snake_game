@@ -22,6 +22,9 @@ def generate_random_position():
     x = random.randint(0, WINDOWS_WIDTH)
     y = random.randint(0, WINDOWS_HEIGHT)
 
+    if (x,y) in obstacle_pos:
+        generate_random_position()
+
     return x // BLOCK * BLOCK, y // BLOCK * BLOCK
 def game_over():
     pygame.quit()
@@ -34,6 +37,10 @@ snake_pos = [(STARTING_POS_X, STARTING_POS_Y), (STARTING_POS_X + BLOCK, STARTING
 snake_surface = pygame.Surface((BLOCK, BLOCK))
 snake_surface.fill((255, 255, 255))
 direction = K_LEFT
+
+obstacle_pos = []
+obstacle_surface = pygame.Surface((BLOCK, BLOCK))
+obstacle_surface.fill((82, 82, 82))
 
 apple_surface = pygame.Surface((BLOCK, BLOCK))
 apple_surface.fill((255, 0, 0))
@@ -66,6 +73,12 @@ while True:
     if (collision(snake_pos[0], apple_pos)):
         snake_pos.append((-10,-10))
         apple_pos = generate_random_position()
+        obstacle_pos.append(generate_random_position())
+
+    for pos in obstacle_pos:
+        if collision(snake_pos[0],pos):
+            game_over()
+        window.blit(obstacle_surface, pos)
     
     for pos in snake_pos:
         window.blit(snake_surface,pos)
