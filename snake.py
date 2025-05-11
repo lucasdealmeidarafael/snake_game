@@ -30,7 +30,7 @@ def game_over():
 pygame.init()
 window = pygame.display.set_mode((WINDOWS_WIDTH, WINDOWS_HEIGHT))
 
-snake_pos = [(STARTING_POS_X, STARTING_POS_Y)]
+snake_pos = [(STARTING_POS_X, STARTING_POS_Y), (STARTING_POS_X + BLOCK, STARTING_POS_Y), (STARTING_POS_X + 2 * BLOCK, STARTING_POS_Y)]
 snake_surface = pygame.Surface((BLOCK, BLOCK))
 snake_surface.fill((255, 255, 255))
 direction = K_LEFT
@@ -55,9 +55,14 @@ while True:
     window.blit(apple_surface, apple_pos)
 
     if (collision(snake_pos[0], apple_pos)):
+        snake_pos.append((-10,-10))
         apple_pos = generate_random_position()
+    
     for pos in snake_pos:
         window.blit(snake_surface,pos)
+
+    for item in range(len(snake_pos)-1,0,-1):
+        snake_pos[item] = snake_pos[item-1]
 
     if checking_margins(snake_pos[0]):
         game_over()
