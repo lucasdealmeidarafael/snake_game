@@ -1,7 +1,8 @@
 import pygame
 from pygame.locals import *
-import random
 
+import random
+import time
 
 WINDOWS_WIDTH = 600
 WINDOWS_HEIGHT = 600
@@ -33,6 +34,12 @@ def generate_random_position():
 
     return x // BLOCK * BLOCK, y // BLOCK * BLOCK
 def game_over():
+    fonte = pygame.font.SysFont('arial', 60, True, True)
+    gameOver = 'GAME OVER'
+    text_over = fonte.render(gameOver, True, (255,255,255))
+    window.blit(text_over,(110,300))
+    pygame.display.update()
+    time.sleep(5)
     pygame.quit()
     quit()
 
